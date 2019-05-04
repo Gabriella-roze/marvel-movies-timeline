@@ -58,25 +58,31 @@ a {
     z-index: 2;
 }
 .movie__first {
+        -webkit-clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 0% 0%);
     clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 0% 0%);
 }
 .movie__first--clicked {
+        -webkit-clip-path: polygon(91% 0%, 100% 50%, 91% 100%, 0% 100%, 0% 0%);
     clip-path: polygon(91% 0%, 100% 50%, 91% 100%, 0% 100%, 0% 0%);
 }
 .movie__middle { 
     margin-left: -40px;
 
+        -webkit-clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%, 0% 0%);
     clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%, 0% 0%);
 }
 .movie__middle--clicked {
+        -webkit-clip-path: polygon(91% 0%, 100% 50%, 91% 100%, 0% 100%, 9% 50%, 0% 0%);
     clip-path: polygon(91% 0%, 100% 50%, 91% 100%, 0% 100%, 9% 50%, 0% 0%);
 }
 .movie__last {
     margin-left: -40px;
     
+        -webkit-clip-path: polygon(100% 0, 100% 100%, 0% 100%, 25% 50%, 0% 0%);
     clip-path: polygon(100% 0, 100% 100%, 0% 100%, 25% 50%, 0% 0%);
 }
 .movie__last--clicked {
+        -webkit-clip-path: polygon(100% 0, 100% 100%, 0% 100%, 9% 50%, 0% 0%);
     clip-path: polygon(100% 0, 100% 100%, 0% 100%, 9% 50%, 0% 0%);
 }
 
