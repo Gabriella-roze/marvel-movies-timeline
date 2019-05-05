@@ -24,6 +24,7 @@ const movieIds = [
     "tt4154664",
     "tt4154796"
 ];
+let cardClicked = null;
 
 window.addEventListener("DOMContentLoaded", init);
 
@@ -31,7 +32,6 @@ function init() {
     getAllMoviesData();
     
 }
-
 
 function getAllMoviesData(params) {
     const promises = movieIds.map(fetchData)
@@ -49,12 +49,8 @@ function fetchData(imdbMovieId) {
 }
 
 function injectDataToCards(allMoviesData) { 
-
-    console.log(allMoviesData);
-
-    
     timelineCards.forEach((card, i) => {
-
+        // Add data to right places in the DOM
         card.style.backgroundImage = `url(${allMoviesData[i].Poster})`;
         card.querySelector("h2").innerHTML = allMoviesData[i].Title;
         card.querySelector(".year").innerHTML = allMoviesData[i].Year;
@@ -63,51 +59,57 @@ function injectDataToCards(allMoviesData) {
         card.querySelector(".imdb-link").innerHTML = `<a href="https://www.imdb.com/title/${allMoviesData[i].imdbID}/" target="_blank"><i class="fab fa-imdb"></i></a>`;
         card.querySelector(".website-link").innerHTML = `<a href="${allMoviesData[i].Website}" target="_blank"><i class="fas fa-globe-americas"></i></a>`;
         card.querySelector(".description").innerHTML = allMoviesData[i].Plot;
-        
         card.id = allMoviesData[i].imdbID;
 
+        // add EventListener to close prev card and open new one
         card.addEventListener("click", () => {
-            card.classList.add("movie-card--expanded");
+            closeOpenedCard(cardClicked);
+            cardClicked = card;
+            expandCard(card);
+        });
 
-            // TODO: transitionEnd change class to remove hover
-            card.addEventListener("transitionend", () => {
-                card.classList.remove("unclicked");
-            });
-
-
-
-
-
-            card.classList.contains("movie__first") 
-                ? card.classList.add("movie__first--clicked")
-                : card.classList.contains("movie__middle") 
-                    ? card.classList.add("movie__middle--clicked")
-                    : card.classList.add("movie__last--clicked")
-            ;
-
-            if (card.classList.contains("movie__first--clicked") || 
-                card.classList.contains("movie__middle--clicked") || 
-                card.classList.contains("movie__last--clicked")) {
-
-            }
-
-            card.querySelector("div").style.display = "block";
-            card.querySelector("div h1").addEventListener("click", () => {
-                console.log("clicked X");
-                
-                card.classList.remove("movie-card--expanded");
-                card.querySelector("div").style.display = "none";
-
-            })
-            
-        })
-
-        
+        // Add EventListener on X to close the container that was opened
+        card.querySelector("div h1").addEventListener("click", (e) => {
+            e.stopPropagation();
+            closeOpenedCard(card);
+        })  
     })
-
 }
 
+function closeOpenedCard(card) {
+    if (!card) { return; }
 
-function closeMovieDetails(card) {
-    
+    // close the container
+    card.classList.remove("movie-card--expanded");
+    card.querySelector("div").style.display = "none";
+
+    // add Hover to the container
+    card.addEventListener("transitionend", () => {
+        card.classList.add("unclicked");
+    });
+
+    // change container's clip-path acording to its position
+    card.classList.contains("movie__first")
+        ? card.classList.remove("movie__first--clicked")
+        : card.classList.contains("movie__middle")
+            ? card.classList.remove("movie__middle--clicked")
+            : card.classList.remove("movie__last--clicked")
+}
+
+function expandCard(card) {
+    // expand the container
+    card.classList.add("movie-card--expanded");
+    card.querySelector("div").style.display = "block";
+
+    // remove Hover from the container
+    card.addEventListener("transitionend", () => {
+        card.classList.remove("unclicked");
+    });
+
+    // change container's clip-path acording to its position
+    card.classList.contains("movie__first")
+        ? card.classList.add("movie__first--clicked")
+        : card.classList.contains("movie__middle")
+            ? card.classList.add("movie__middle--clicked")
+            : card.classList.add("movie__last--clicked")
 }
