@@ -30,7 +30,15 @@ window.addEventListener("DOMContentLoaded", init);
 
 function init() {
     getAllMoviesData();
+    importSVG();
     
+}
+function importSVG() {
+    fetch("marvel-logo.svg")
+        .then(response => response.text())
+        .then(svgData => {
+            document.getElementById("svg").insertAdjacentHTML('afterbegin', svgData);
+        })
 }
 
 function getAllMoviesData(params) {

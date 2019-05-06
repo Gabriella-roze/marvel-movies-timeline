@@ -1,34 +1,83 @@
-
-
+/* General */
 * {
     margin: 0;
 }
 body {
     width: 100vw;
-    height: 100vh;
-    background: white;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+
+    background-image: linear-gradient(#bebebe, #f7f7f7, #bebebe);
 }
-h1, p {
-    margin: 50px;
-    font-family: sans-serif;
+header {
+    box-sizing: border-box;
+    width: 100%;
+} 
+header>h1, header>p, body>p {
+    text-align: center;
+}
+header>h1 {
+    padding-top: 70px;
+    font-size: 32px;
+    letter-spacing: 3px;
+    color: white;
+    font-family: 'Fjalla One', cursive;
+}
+header {
+    box-sizing: border-box;
+
+    width: 100%;
+
+    background-color: #212529;
+}
+header div {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+svg {
+    height: 200px;
+    margin-top: -55px;
+}
+h2 {
+    font-family: 'Fjalla One', cursive;
+    font-size: 30px;
+}
+p {
+    margin: 20px;
+    font-variant: small-caps;
+    font-family: 'Source Sans Pro', serif;
 }
 a {
     color: white;
+    font-size: 24px;
+    transition: 0.3s ease-in-out;
+}
+a:hover {
+    color: #f01e22;
 }
 
-
-
+/* Timeline */
 #timeline-preview {
     box-sizing: border-box;
     width: 100vw;
     height: 450px;
+    margin: 70px 0 20px;
 
     display: flex;
         
     overflow-x: scroll;
     overflow-y: hidden;
 }
-/* Clipping masks for divs */
+#timeline-shadow {
+    height: 20px;
+    width: 100vw;
+    background-color: #212529;
+}
+/* Movie Cards */
 .movie-card {
     box-sizing: border-box;
     min-width: 200px;
@@ -57,6 +106,8 @@ a {
     transform: scale(1.05);
     z-index: 2;
 }
+
+/* Clipping masks for movie cards */
 .movie__first {
         -webkit-clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 0% 0%);
     clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 0% 0%);
@@ -86,7 +137,7 @@ a {
     clip-path: polygon(100% 0, 100% 100%, 0% 100%, 9% 50%, 0% 0%);
 }
 
-/* Wrapper of details */
+/* Wrapper of movie details */
 .details-wrapper {
     display: none;
 
@@ -101,10 +152,32 @@ a {
 }
 .details-wrapper h1 {
     cursor: pointer;
+    transition: 0.2s ease-in-out;
 }
-.details-wrapper h2 {
-
+.details-wrapper h1:hover {
+    color: #f01e22;
 }
 .details-wrapper * {
     margin: 5px;
+}
+
+/* SVG */
+#red-rect {
+    opacity: 0;
+    animation: fillInn 0.5s ease-in-out 0.5s forwards;
+    
+}
+@keyframes fillInn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+#subtitle {
+    fill: white;
+    stroke-width: 40;
+    stroke-dasharray: 325 325;
+    stroke-dashoffset: 325;
 }
