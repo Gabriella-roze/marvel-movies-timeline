@@ -129,16 +129,20 @@ function expandCard(card) {
 
     // color bubbles
     let bubbleNr = Number(card.id.slice(5)) + 1;
-    console.log(allBubbles);
-    
-    let colBubbles = allBubbles.filter(bubble => Number(bubble.id.slice(2)) <= bubbleNr);
-    console.log(colBubbles);
-    
-    // if (someNr <= bubbleNr) {
-    //     document.querySelector(`#nr${bubbleNr} circle`).classList.add("fill--pink");
-    // }
+    let colBubbles = [];
 
-    // expand the container
+    allBubbles.forEach(bubble => {
+        if (Number(bubble.id.slice(2)) <= bubbleNr) {
+            colBubbles.push(bubble);
+        }
+    });
+
+    colBubbles.forEach(bubble => {
+        bubble.querySelector("circle").classList.add("fill--pink");
+    })
+
+    // expand the container & move it to the view
+    card.scrollIntoView({ behavior: 'smooth' });
     card.classList.add("movie-card--expanded");
     card.querySelector("div").style.display = "block";
 
