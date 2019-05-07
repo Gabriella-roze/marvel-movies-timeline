@@ -24,6 +24,8 @@ const movieIds = [
     "tt4154664",
     "tt4154796"
 ];
+let allBubblesFills;
+
 let cardClicked = null;
 
 window.addEventListener("DOMContentLoaded", init);
@@ -46,12 +48,19 @@ function importSVGTimeline() {
         .then(response => response.text())
         .then(svgData => {
             document.getElementById("svg-timeline").insertAdjacentHTML('afterbegin', svgData);
+
+            // set allBubblesFills to the fills in svg
+            allBubblesFills = document.querySelectorAll(".s1");
+
+            // add eventListener to svg
+            let allBubbles = document.querySelectorAll("#svg-timeline .bubble");            
+            allBubbles.forEach(bubble => bubble.addEventListener("click", () => bubbleClicked(bubble.id)));
         })
 }
 
 function getAllMoviesData(params) {
     const promises = movieIds.map(fetchData)
-
+    // stock up all fetches and save it to one variable
     Promise.all(promises)
         .then(responses => {
             responses = responses.map(obj => obj.json())
@@ -75,7 +84,7 @@ function injectDataToCards(allMoviesData) {
         card.querySelector(".imdb-link").innerHTML = `<a href="https://www.imdb.com/title/${allMoviesData[i].imdbID}/" target="_blank"><i class="fab fa-imdb"></i></a>`;
         card.querySelector(".website-link").innerHTML = `<a href="${allMoviesData[i].Website}" target="_blank"><i class="fas fa-globe-americas"></i></a>`;
         card.querySelector(".description").innerHTML = allMoviesData[i].Plot;
-        card.id = allMoviesData[i].imdbID;
+        card.id = `movie${i}`;
 
         // add EventListener to close prev card and open new one
         card.addEventListener("click", () => {
@@ -88,6 +97,8 @@ function injectDataToCards(allMoviesData) {
         card.querySelector("div h1").addEventListener("click", (e) => {
             e.stopPropagation();
             closeOpenedCard(card);
+            // reset bubbles' fills
+            resetBubbles();
         })  
     })
 }
@@ -113,6 +124,12 @@ function closeOpenedCard(card) {
 }
 
 function expandCard(card) {
+    resetBubbles();
+
+    let bubbleNr = Number(card.id.slice(5)) + 1;
+    document.querySelector(`#nr${bubbleNr} circle`).classList.add("fill--pink");
+
+
     // expand the container
     card.classList.add("movie-card--expanded");
     card.querySelector("div").style.display = "block";
@@ -128,4 +145,15 @@ function expandCard(card) {
         : card.classList.contains("movie__middle")
             ? card.classList.add("movie__middle--clicked")
             : card.classList.add("movie__last--clicked")
+}
+function resetBubbles() {
+    console.log("removing fills");
+    allBubblesFills.forEach(fill => fill.classList.remove("fill--pink"));
+}
+
+function bubbleClicked(bubbleClicked) {
+    let id = bubbleClicked.slice(2) - 1;
+    closeOpenedCard(cardClicked);
+    cardClicked = document.getElementById(`movie${id}`);
+    expandCard(cardClicked);  
 }
