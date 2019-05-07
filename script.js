@@ -24,7 +24,8 @@ const movieIds = [
     "tt4154664",
     "tt4154796"
 ];
-let allBubblesFills;
+let allBubblesFills = [];
+let allBubbles = [];
 
 let cardClicked = null;
 
@@ -47,13 +48,13 @@ function importSVGTimeline() {
     fetch("timeline.svg")
         .then(response => response.text())
         .then(svgData => {
-            document.getElementById("svg-timeline").insertAdjacentHTML('afterbegin', svgData);
+            document.getElementById("svg-timeline").insertAdjacentHTML('beforeend', svgData);
 
-            // set allBubblesFills to the fills in svg
+            // select all bubbles and all their fills
             allBubblesFills = document.querySelectorAll(".s1");
+            allBubbles = document.querySelectorAll(".bubble"); 
 
-            // add eventListener to svg
-            let allBubbles = document.querySelectorAll("#svg-timeline .bubble");            
+            // add eventListener to svg           
             allBubbles.forEach(bubble => bubble.addEventListener("click", () => bubbleClicked(bubble.id)));
         })
 }
@@ -124,11 +125,18 @@ function closeOpenedCard(card) {
 }
 
 function expandCard(card) {
-    resetBubbles();
+    resetBubbles(); 
 
+    // color bubbles
     let bubbleNr = Number(card.id.slice(5)) + 1;
-    document.querySelector(`#nr${bubbleNr} circle`).classList.add("fill--pink");
-
+    console.log(allBubbles);
+    
+    let colBubbles = allBubbles.filter(bubble => Number(bubble.id.slice(2)) <= bubbleNr);
+    console.log(colBubbles);
+    
+    // if (someNr <= bubbleNr) {
+    //     document.querySelector(`#nr${bubbleNr} circle`).classList.add("fill--pink");
+    // }
 
     // expand the container
     card.classList.add("movie-card--expanded");
