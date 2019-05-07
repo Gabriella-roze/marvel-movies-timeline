@@ -38,10 +38,6 @@ header div {
     justify-content: center;
     align-content: center;
 }
-svg {
-    height: 200px;
-    margin-top: -55px;
-}
 h2 {
     font-family: 'Fjalla One', cursive;
     font-size: 30px;
@@ -49,7 +45,7 @@ h2 {
 p {
     margin: 20px;
     font-variant: small-caps;
-    font-family: 'Source Sans Pro', serif;
+    font-family: 'Source Sans Pro', sans-serif;
 }
 a {
     color: white;
@@ -65,7 +61,7 @@ a:hover {
     box-sizing: border-box;
     width: 100vw;
     height: 450px;
-    margin: 70px 0 20px;
+    margin: 35px 0 20px;
 
     display: flex;
         
@@ -106,6 +102,13 @@ a:hover {
     transform: scale(1.05);
     z-index: 2;
 }
+/* .order-nr {
+    width: 90px;
+    height: 90px;
+    color: white;
+    font-size: 45px;
+    font-family: 'Source Sans Pro', sans-serif;
+} */
 
 /* Clipping masks for movie cards */
 .movie__first {
@@ -162,10 +165,13 @@ a:hover {
 }
 
 /* SVG */
+#svg-logo {
+    height: 280px;
+    margin-top: -70px;
+}
 #red-rect {
     opacity: 0;
     animation: fillInn 0.5s ease-in-out 0.5s forwards;
-    
 }
 @keyframes fillInn {
     0% {
@@ -180,4 +186,16 @@ a:hover {
     stroke-width: 40;
     stroke-dasharray: 325 325;
     stroke-dashoffset: 325;
+}
+#timeline {
+    margin: 10px 5vw;
+    width: 90vw;
+}
+.bubble {
+    cursor: pointer;
+    transition: 0.5s ease-in-out;
+}
+.bubble:hover {
+    transform-origin: center;
+    transform: translateY(-15px);
 }

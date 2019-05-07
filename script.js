@@ -30,14 +30,22 @@ window.addEventListener("DOMContentLoaded", init);
 
 function init() {
     getAllMoviesData();
-    importSVG();
+    importSVGLogo();
+    importSVGTimeline();
     
 }
-function importSVG() {
+function importSVGLogo() {
     fetch("marvel-logo.svg")
         .then(response => response.text())
         .then(svgData => {
-            document.getElementById("svg").insertAdjacentHTML('afterbegin', svgData);
+            document.getElementById("svg-logo").insertAdjacentHTML('afterbegin', svgData);
+        })
+}
+function importSVGTimeline() {
+    fetch("timeline.svg")
+        .then(response => response.text())
+        .then(svgData => {
+            document.getElementById("svg-timeline").insertAdjacentHTML('afterbegin', svgData);
         })
 }
 
